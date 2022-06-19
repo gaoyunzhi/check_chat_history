@@ -44,10 +44,10 @@ def test(file_name, setting_name):
 		try:
 			target.send_message(log_markdown, parse_mode='markdown')
 		except:
-			target.send_message(log_markdown, parse_mode='log_html')
+			target.send_message(log_markdown, parse_mode='html')
 		sent.add(user_id)
-		existing.add(user_id)
-		time.sleep(1)
+		# existing.add(user_id)
+		time.sleep(5)
 
 if __name__ == '__main__':
 	test('db/1.json', 'db/setting.yaml')

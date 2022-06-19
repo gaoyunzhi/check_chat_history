@@ -4,6 +4,7 @@
 from telegram.ext import Updater
 import yaml
 from telegram_util import matchKey
+import time
 
 with open('token') as f:
 	token = f.read().strip()
@@ -23,14 +24,14 @@ def test(file_name, setting_name):
 		try:
 			user_id = int(message.get('from_id').split('user')[-1])
 		except:
-			print(message)
+			# print(message)
 			continue
 		if user_id in sent:
 			continue
 		name = message.get('from')
 		text = message.get('text')
 		if not name or not text:
-			print(message)
+			# print(message)
 			continue
 		text = ' '.join(text.split())
 		log_markdown = '[%s](tg://user?id=%d) %d %s' % (name, user_id, user_id, text)
@@ -40,6 +41,7 @@ def test(file_name, setting_name):
 		except:
 			target.send_message(log_markdown, parse_mode='log_html')
 		sent.add(user_id)
+		time.sleep(1)
 
 if __name__ == '__main__':
 	test('db/1.json', 'db/setting.yaml')

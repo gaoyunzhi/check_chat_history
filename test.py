@@ -25,16 +25,20 @@ def test(file_name, setting_name):
 		except:
 			print(message)
 			continue
+		if user_id in sent:
+			continue
 		name = message.get('from')
 		text = message.get('text')
 		if name or text:
 			print(message)
 			continue
 		text = ' '.join(text.split())
-		tg://user?id=
-
-
-
+		log_markdown = '[%s](tg://user?id=%d) %d %s' % (name, user_id, user_id, text)
+		log_html = '<a href="tg://user?id=%d">%s</a> %d %s' % (user_id, name, user_id, text)
+		try:
+			target.send_message(log_markdown, parse_mode='markdown')
+		except:
+			target.send_message(log_markdown, parse_mode='log_html')
 
 if __name__ == '__main__':
 	test('db/1.json', 'db/setting.ymal')

@@ -5,6 +5,9 @@ from telegram.ext import Updater
 import yaml
 from telegram_util import matchKey
 import time
+import plain_db
+
+existing = plain_db.loadKeyOnlyDB('existing')
 
 with open('token') as f:
 	token = f.read().strip()
@@ -28,12 +31,14 @@ def test(file_name, setting_name):
 			continue
 		if user_id in sent:
 			continue
+		if existing.contain(user_id):
+			continue
 		name = message.get('from')
 		text = message.get('text')
 		if not name or not text:
 			# print(message)
 			continue
-		text = ' '.join(text.split())
+		text = ' '.join(str(text).split())
 		log_markdown = '[%s](tg://user?id=%d) %d %s' % (name, user_id, user_id, text)
 		log_html = '<a href="tg://user?id=%d">%s</a> %d %s' % (user_id, name, user_id, text)
 		try:
@@ -41,6 +46,7 @@ def test(file_name, setting_name):
 		except:
 			target.send_message(log_markdown, parse_mode='log_html')
 		sent.add(user_id)
+		existing.add(user_id)
 		time.sleep(1)
 
 if __name__ == '__main__':

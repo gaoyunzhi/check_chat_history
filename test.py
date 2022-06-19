@@ -29,7 +29,7 @@ def test(file_name, setting_name):
 			continue
 		name = message.get('from')
 		text = message.get('text')
-		if name or text:
+		if not name or not text:
 			print(message)
 			continue
 		text = ' '.join(text.split())
@@ -39,7 +39,8 @@ def test(file_name, setting_name):
 			target.send_message(log_markdown, parse_mode='markdown')
 		except:
 			target.send_message(log_markdown, parse_mode='log_html')
+		sent.add(user_id)
 
 if __name__ == '__main__':
-	test('db/1.json', 'db/setting.ymal')
+	test('db/1.json', 'db/setting.yaml')
 

@@ -50,5 +50,5 @@ def test(file_name, setting_name):
 		time.sleep(5)
 
 if __name__ == '__main__':
-	test('db/1.json', 'db/setting.yaml')
+	test('db/3.json', 'db/setting.yaml')
 
